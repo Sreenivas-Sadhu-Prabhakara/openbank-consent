@@ -1,5 +1,7 @@
 # openbank-consent
 
+[![CI](https://github.com/Sreenivas-Sadhu-Prabhakara/openbank-consent/actions/workflows/ci.yml/badge.svg)](https://github.com/Sreenivas-Sadhu-Prabhakara/openbank-consent/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Go](https://img.shields.io/badge/Go-1.25-00ADD8?logo=go&logoColor=white)](https://go.dev)
+
 The **Consent** microservice — the BIAN *Consent Administration* service domain. It owns the full UK Open Banking (OBIE) consent lifecycle for all three consent types in the estate: **account-access** (AIS), **domestic-payment** (PIS) and **funds-confirmation** (CBPII). The AIS/PIS/CBPII services never store consent themselves — they validate against this service.
 
 ## Endpoints
