@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Consent — BIAN · Consent Administration · openbank-bian</title>
+<meta name="description" content="Consent: the BIAN · Consent Administration service in openbank-bian, a runnable UK Open Banking (OBIE) reference in Go. Owns the consent lifecycle."/>
+<meta name="keywords" content="Open Banking, OBIE, BIAN · Consent Administration, Consent microservice, BIAN, Go, consent, openbank-consent"/>
+<meta name="author" content="Sreenivas Sadhu Prabhakara"/>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+<meta name="theme-color" content="#0071e3"/>
+<link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/openbank-consent/"/>
+<meta property="og:site_name" content="openbank-bian"/>
+<meta property="og:title" content="Consent — BIAN · Consent Administration"/>
+<meta property="og:description" content="The trust anchor for UK Open Banking. Owns the full consent lifecycle for account-access, domestic-payment and funds-confirmation — every other service validates against it."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/openbank-consent/"/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/openbank-consent/assets/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Consent — BIAN · Consent Administration microservice in openbank-bian."/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Consent — BIAN · Consent Administration"/>
+<meta name="twitter:description" content="The trust anchor for UK Open Banking. Owns the full consent lifecycle for account-access, domestic-payment and funds-confirmation — every other service validates against it."/>
+<meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/openbank-consent/assets/og.png"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://sreenivas-sadhu-prabhakara.github.io/openbank-consent/#software",
+      "name": "openbank-consent",
+      "description": "The Consent microservice implements the BIAN Consent Administration service domain. It owns the OBIE consent lifecycle — AwaitingAuthorisation → Authorised → Consumed/Revoked — for all three consent types in the estate. The AISP, PISP and CBPII services never store consent themselves; they validate against this service before acting.",
+      "url": "https://sreenivas-sadhu-prabhakara.github.io/openbank-consent/",
+      "codeRepository": "https://github.com/Sreenivas-Sadhu-Prabhakara/openbank-consent",
+      "programmingLanguage": "Go",
+      "runtimePlatform": "Go 1.25",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": {
+        "@type": "Person",
+        "name": "Sreenivas Sadhu Prabhakara",
+        "url": "https://github.com/Sreenivas-Sadhu-Prabhakara"
+      },
+      "isPartOf": {
+        "@type": "SoftwareApplication",
+        "name": "openbank-bian",
+        "url": "https://sreenivas-sadhu-prabhakara.github.io/openbank-bian/"
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Open Banking"
+        },
+        {
+          "@type": "Thing",
+          "name": "BIAN · Consent Administration"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "openbank-bian",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/openbank-bian/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Consent service",
+          "item": "https://sreenivas-sadhu-prabhakara.github.io/openbank-consent/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a consent in UK Open Banking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A consent is the customer’s explicit, scoped and time-boxed authorisation for a third party to read specific data or initiate a specific payment. In OBIE it has a type (account-access, domestic-payment, funds-confirmation), a set of permissions, and a lifecycle from AwaitingAuthorisation through Authorised to Consumed or Revoked."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is Consent the “trust anchor”?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because no other service trusts the caller’s claim. Accounts, Payments, Funds and Party each fetch and validate the consent from this service — its status, type, permissions and expiry — before releasing data or moving money. Authorisation is enforced in one place, in code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is openbank-consent production-ready?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It is an educational reference implementation. The FAPI security profile (OAuth2/OIDC, MTLS, signed request objects) is stubbed, and an internal endpoint stands in for the PSU authentication redirect. Do not use it as-is for real customer data or live payments."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{--bg:#fff;--bg2:#f5f5f7;--ink:#1d1d1f;--ink2:#6e6e73;--ink3:#86868b;--line:#d2d2d7;--line2:#e8e8ed;--blue:#0071e3;--blueh:#0077ed;--sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+.nav{position:sticky;top:0;z-index:9;height:48px;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line2)}
+.nav .r{max-width:960px;margin:0 auto;padding:0 22px;height:48px;display:flex;align-items:center;justify-content:space-between}
+.nav .b{font-size:15px;font-weight:600}.nav .b .o{color:var(--blue)}
+.nav .l a{color:var(--ink2);font-size:13px;margin-left:22px}
+.hero{text-align:center;padding:84px 0 46px;background:radial-gradient(120% 90% at 50% -10%,#f2f7ff 0%,#fff 46%)}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:1px;color:var(--ink2);text-transform:uppercase}
+h1{font-size:76px;line-height:1.02;letter-spacing:-2px;margin:14px 0 6px;background:linear-gradient(120deg,#0071e3,#2997ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.port{font-family:var(--mono);color:var(--blue);font-size:16px;margin-bottom:16px}
+.sub{font-size:22px;color:var(--ink2);max-width:44ch;margin:0 auto 26px}
+.cta a{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:#fff;font-size:16px;padding:11px 22px;border-radius:980px;margin:0 6px}
+.cta a.ghost{background:var(--bg2);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:26px 0 0}
+.chip{font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--bg2);border:1px solid var(--line2);border-radius:980px;padding:7px 14px}
+.chip-none{color:var(--ink3)}
+section{padding:52px 0;border-top:1px solid var(--line2)}
+section.alt{background:var(--bg2)}
+h2{font-size:34px;letter-spacing:-1px;margin:0 0 8px}
+.lead{color:var(--ink2);font-size:19px;max-width:60ch;margin:0 0 26px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
+td code,.m{font-family:var(--mono);font-size:13px}
+td .meth{display:inline-block;min-width:52px;font-weight:600;color:var(--blue)}
+pre{background:#1d1d1f;color:#f5f5f7;border-radius:14px;padding:20px 22px;overflow:auto;font-family:var(--mono);font-size:14px;line-height:1.7}
+pre .c{color:#86868b}
+.faq details{border-bottom:1px solid var(--line2)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 44px 20px 2px;position:relative;font-size:20px;font-weight:600}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:26px;font-weight:300;color:var(--ink3)}
+.faq details[open] summary::after{content:"\2013"}
+.faq .a{padding:0 2px 22px;color:var(--ink2);max-width:70ch}
+.rel{display:flex;flex-wrap:wrap;gap:10px}
+.rel a{font-family:var(--mono);font-size:13px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+footer{padding:44px 0 60px;border-top:1px solid var(--line2);color:var(--ink3);font-size:13px}
+footer .disc{margin-top:12px;max-width:80ch;line-height:1.6}
+@media(max-width:640px){h1{font-size:52px}.nav .l a:first-child{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="r"><div class="b"><span class="o">●</span> openbank-bian / openbank-consent</div><div class="l"><a href="#run">Run</a><a href="#faq">FAQ</a><a href="https://sreenivas-sadhu-prabhakara.github.io/openbank-bian/">All services ↗</a></div></div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">BIAN · Consent Administration</div>
+  <h1>Consent</h1>
+  <div class="port">:8081 · openbank-consent</div>
+  <p class="sub">The trust anchor for UK Open Banking. Owns the full consent lifecycle for account-access, domestic-payment and funds-confirmation — every other service validates against it.</p>
+  <div class="cta"><a href="https://github.com/Sreenivas-Sadhu-Prabhakara/openbank-consent">View on GitHub</a><a class="ghost" href="https://sreenivas-sadhu-prabhakara.github.io/openbank-bian/">The whole estate ↗</a></div>
+</div></header>
+
+<section><div class="wrap">
+  <h2>What it is</h2>
+  <p class="lead">The Consent microservice implements the BIAN Consent Administration service domain. It owns the OBIE consent lifecycle — AwaitingAuthorisation → Authorised → Consumed/Revoked — for all three consent types in the estate. The AISP, PISP and CBPII services never store consent themselves; they validate against this service before acting.</p>
+  <div class="chips"><strong style="align-self:center;font-size:13px;color:var(--ink3);letter-spacing:.04em">DEPENDS ON</strong> <span class="chip chip-none">No upstream dependencies</span></div>
+  <div class="chips" style="margin-top:10px"><strong style="align-self:center;font-size:13px;color:var(--ink3);letter-spacing:.04em">USED BY</strong> <a class="chip" href="https://sreenivas-sadhu-prabhakara.github.io/openbank-accounts/">openbank-accounts</a><a class="chip" href="https://sreenivas-sadhu-prabhakara.github.io/openbank-payments/">openbank-payments</a><a class="chip" href="https://sreenivas-sadhu-prabhakara.github.io/openbank-funds/">openbank-funds</a><a class="chip" href="https://sreenivas-sadhu-prabhakara.github.io/openbank-party/">openbank-party</a></div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>Key endpoints</h2>
+  <p class="lead">Speaks the OBIE contract on the wire. A selection of the endpoints this service exposes:</p>
+  <table><thead><tr><th>Method</th><th>Path</th><th>Purpose</th></tr></thead><tbody>
+  <tr><td><span class="meth">POST</span></td><td><code>/account-access-consents</code></td><td>Create an AIS (account information) consent</td></tr>
+  <tr><td><span class="meth">POST</span></td><td><code>/domestic-payment-consents</code></td><td>Create a PIS (payment) consent</td></tr>
+  <tr><td><span class="meth">POST</span></td><td><code>/funds-confirmation-consents</code></td><td>Create a CBPII (funds) consent</td></tr>
+  <tr><td><span class="meth">POST</span></td><td><code>/internal/consents/{id}/authorise</code></td><td>Stand-in for PSU authentication → Authorised</td></tr>
+  <tr><td><span class="meth">GET</span></td><td><code>/internal/consents/{id}</code></td><td>Service-to-service consent projection</td></tr>
+  </tbody></table>
+</div></section>
+
+<section id="run"><div class="wrap">
+  <h2>Run it — zero infrastructure</h2>
+  <p class="lead">Clone the repo and start the service with an in-memory store. No database required to try it.</p>
+<pre><span class="c"># clone and run (in-memory store, no infra)</span>
+git clone https://github.com/Sreenivas-Sadhu-Prabhakara/openbank-consent.git
+cd openbank-consent && go run .
+
+<span class="c"># it is now serving OBIE on :8081</span>
+curl localhost:8081/health</pre>
+</div></section>
+
+<section id="faq" class="alt"><div class="wrap">
+  <h2>FAQ</h2>
+  <div class="faq">
+  <details><summary>What is a consent in UK Open Banking?</summary><div class="a">A consent is the customer’s explicit, scoped and time-boxed authorisation for a third party to read specific data or initiate a specific payment. In OBIE it has a type (account-access, domestic-payment, funds-confirmation), a set of permissions, and a lifecycle from AwaitingAuthorisation through Authorised to Consumed or Revoked.</div></details>
+  <details><summary>Why is Consent the “trust anchor”?</summary><div class="a">Because no other service trusts the caller’s claim. Accounts, Payments, Funds and Party each fetch and validate the consent from this service — its status, type, permissions and expiry — before releasing data or moving money. Authorisation is enforced in one place, in code.</div></details>
+  <details><summary>Is openbank-consent production-ready?</summary><div class="a">No. It is an educational reference implementation. The FAPI security profile (OAuth2/OIDC, MTLS, signed request objects) is stubbed, and an internal endpoint stands in for the PSU authentication redirect. Do not use it as-is for real customer data or live payments.</div></details>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Explore the estate</h2>
+  <p class="lead">openbank-bian rebuilds UK Open Banking as five consent-first services. Explore the rest:</p>
+  <div class="rel">
+    <a href="https://sreenivas-sadhu-prabhakara.github.io/openbank-bian/">▲ openbank-bian — overview</a>
+    <a href="https://sreenivas-sadhu-prabhakara.github.io/openbank-accounts/">Accounts :8082</a>
+    <a href="https://sreenivas-sadhu-prabhakara.github.io/openbank-payments/">Payments :8083</a>
+    <a href="https://sreenivas-sadhu-prabhakara.github.io/openbank-funds/">Funds :8084</a>
+    <a href="https://sreenivas-sadhu-prabhakara.github.io/openbank-party/">Party :8085</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div>openbank-bian · openbank-consent · UK Open Banking (OBIE) × BIAN × Go — a teaching reference.</div>
+  <div class="disc"><strong>Disclaimer.</strong> Independent, educational reference implementation. Not production software, and not affiliated with, endorsed by, or certified against OBIE / Open Banking Limited or BIAN. The FAPI security profile (OAuth2/OIDC, MTLS, signed request objects) is intentionally stubbed. Do not use as-is for real customer data or live payments.</div>
+</div></footer>
+</body>
+</html>
